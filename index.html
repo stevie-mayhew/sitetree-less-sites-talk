@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>SiteTree-less Sites or: How I learned to stop worrying and love ModelAdmin</title>
+
+    <meta name="description" content="SiteTree-less Sites or: How I learned to stop worrying and love ModelAdmin">
+    <meta name="author" content="Stevie Mayhew">
+
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/solarized.css" id="theme">
+    <link rel="stylesheet" href="css/theme/custom.css">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+<!-- Any section element inside of this container is displayed as a slide -->
+<div class="slides">
+<section>
+    <h1>SiteTree-less Sites</h1>
+
+    <h3>
+        <small>or:</small>
+        <br/> How I learned to stop<br/> worrying and love ModelAdmin
+    </h3>
+
+</section>
+
+<section>
+    <h2>Who Are You?</h2>
+    <div class="stevie-holder">
+        <img class="stevie fragment" src="logo-beard.png" alt="Stevie w/ Beard" style="border: none; width: 200px;" class="fragment">
+        <img class="stevie" src="logo.jpg" alt="Stevie" style="border:none; width: 200px;"/>
+    </div>
+        <p>
+        <small>
+            Stevie Mayhew<br/>
+            Technical Director @ Little Giant
+        </small>
+    </p>
+
+    <p>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="310 147.7 344.8 266.3"
+             enable-background="new 310 147.7 344.8 266.3" class="svg-lg">
+            <path d="M450.1 334.1l-9.3-9.3c-3.7-1.9-20.5 9.3-20.5 9.3-1.9 16.8 7.5 28 3.7 46.7 7.5 7.5 31.7 5.6 37.3-3.7C452 364 452 351 452 334.2c0 1.8-1.9-.1-1.9-.1m201.6-115.7c-1.9-5.6-1.9 9.3-5.6 22.4-3.7 11.2-1.9 41.1-50.4 37.3-11.2 0-24.3-1.9-33.6-28v-9.4c0-1.9 0-1.9-1.9-3.7-1.9-1.9-5.6 0-5.6 0 1.9-1.9 3.7-3.7 7.5-1.9 1.9 0 1.9 1.9 1.9 3.7 0 3.7 0 5.6 1.9 7.5 3.7 9.3 9.3 18.7 16.8 24.3 0-18.7 5.6-31.7 3.7-46.7-1.9-22.4-20.5-37.3-28-54.1-1.9-5.6-1.9-11.2-5.6-14.9-9.3-9.3-37.3-9.3-48.5-1.9-3.7 3.7-9.3 16.8-14.9 18.7-7.5 1.9-24.3-7.5-33.6-3.7-18.7 7.5-26.1 20.5-48.5 24.3C375.6 196 342 203.5 327 224c-7.5 9.3-13.1 24.3-14.9 39.2-1.9 18.7-5.6 42.9 7.5 42.9-3.7-11.2-5.6-33.6 3.7-41.1 0-3.7 0-3.7 1.9-5.6 1.9 0-3.7 3.7-7.5 7.5-1.9 13.1 7.5 22.4 9.3 33.6 0 16.8-14.9 35.5-16.8 54.1 0 11.2 1.9 18.7 0 28 7.5 5.6 33.6 7.5 35.5-3.7-3.7-3.7-3.7-9.3-3.7-16.8v-14.9c0-3.7 3.7-20.5 3.7-24.3v-11.2s1.9 5.6 1.9 11.2c1.9 3.7-1.9 16.8-1.9 26.1-3.7 24.3 13.1 33.6 3.7 56 7.5 11.2 42.9 13.1 44.8-1.9 0-5.6-11.2-11.2-11.2-18.7 0-5.6 1.9-11.2 1.9-16.8 0-11.2-1.9-20.5 0-29.9 1.9-3.7 3.7-9.3 3.7-9.3 0 1.9-1.9 5.6-1.9 9.3 11.2 3.7 31.7 1.9 35.5-3.7 7.5-5.6 13.1-7.5 14.9-9.3h3.7c-1.9-3.7-5.6-5.6-5.6-5.6s9.3 5.6 18.7 16.8c16.8 14.9 33.6 33.6 28 69.1 9.3 7.5 37.3 11.2 39.2-1.9 0-5.6-7.5-11.2-9.3-16.8-1.9-9.3 3.7-18.7 1.9-28-1.9-20.5-22.4-33.6-18.7-52.3 11.2-1.9 9.3-11.2 14.9-20.5 3.7-5.6 7.5-9.3 9.3-13.1 1.9-5.6-1.9-13.1 1.9-20.5 3.7-1.9 7.5-5.6 11.2-5.6 1.9 7.5 3.7 14.9 13.1 14.9-1.9-3.7-1.9-9.3 0-13.1V261.2c11.2 29.9 29.9 41.1 74.7 33.6 46.6-14.8 33.5-70.8 31.6-76.4m-26.1 113.9c-14.9 14.9-52.3-5.6-48.5-44.8-13.1-3.7-16.8-9.3-24.3-18.7 1.9 41.1 24.3 87.7 70.9 80.3 1.9-3.7-1.9-5.6-1.9-11.2 1.9-1.9 7.5-5.6 3.8-5.6m-28-134.4c-3.7-7.5 3.7 46.7-14.9 46.7 0 3.7-1.9 7.5-1.9 9.3 20.5-3.8 31.7-28 16.8-56"></path>
+        </svg>
+    <p>
+        <small>
+            <a href="mailto:stevie.mayhew@littlegiant.co.nz">stevie.mayhew@littlegiant.co.nz</a>
+        </small>
+    </p>
+</section>
+
+<section>
+    <h2>Why ditch the site tree?</h2>
+    <ul>
+        <li class="fragment">Complicated for simple solutions</li>
+        <li class="fragment">Large administration cost for clients
+            <ul>
+                <li class="fragment">Clients are excited to click every button
+
+                    <ul>
+                        <li class="fragment">everywhere</li>
+                        <li class="fragment">all the time</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li class="fragment">Training is hard and expensive
+            <ul>
+                <li class="fragment">Videos</li>
+                <li class="fragment">Images</li>
+                <li class="fragment">In person</li>
+            </ul>
+        </li>
+
+    </ul>
+</section>
+
+
+    <section>
+        <h2>What else then?</h2>
+
+        <h1 class="fragment">MODEL ADMIN</h1>
+    </section>
+    <section>
+        <h2>Types of Model Admin</h2>
+        <ul>
+            <li class="fragment">Data Object</li>
+            <li class="fragment">Single Page</li>
+            <li class="fragment">Catalog Page</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Options?</h2>
+        <ul>
+            <li class="fragment"><strong>Versioned Gridfield</strong> (https://github.com/icecaster/silverstripe-versioned-gridfield)</li>
+            <li class="fragment"><strong>Gridfield Pages</strong> (https://github.com/micschk/silverstripe-gridfieldpages)</li>
+            <li class="fragment"><strong>Lumberjack</strong> (https://github.com/micmania1/silverstripe-lumberjack)</li>
+            <li class="fragment"><strong>Catalog Manager</strong> (https://github.com/Little-Giant/silverstripe-catalogmanager)</li>
+            <li class="fragment"><strong>Single Page Admin</strong> (https://github.com/Little-Giant/silverstripe-singlepageadmin)</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Our Method</h2>
+        <ul>
+            <li class="fragment">Catalog Manager</li>
+            <li class="fragment">Single Page Admin</li>
+            <li class="fragment">Custom LeftAndMain Member Admin</li>
+            <li class="fragment">Lots of DataObject Admins</li>
+            <li class="fragment">Secret Sauce <span class="fragment">(GroupedCMSMenu)</span></li>
+        </ul>
+    </section>
+    <section>
+        <h2>Configuration</h2>
+        <img src="config-1.png">
+        <img src="config-2.png">
+        <p class="fragment">Can be simple.</p>
+    </section>
+    <section>
+        <p class="fragment">Or not</p>
+        <img src="config-big-2.png">
+    </section>
+    <section>
+        <p class="fragment">(continued)</p>
+        <img src="config-big-1.png">
+    </section>
+    <section>
+        <h2>CMS Menu</h2>
+        <img src="results-1.png">
+    </section>
+    <section>
+        <h2>Catalog Manager</h2>
+        <img src="results-2.png">
+    </section>
+    <section>
+        <h2>Catalog Manager</h2>
+        <img src="results-3.png">
+    </section>
+    <section>
+        <h2>Single Page Admin</h2>
+        <img src="results-4.png">
+    </section>
+    <section>
+        <h2>Pitfalls</h2>
+        <ul>
+            <li class="fragment">Not as fine tuned control
+                <ul>
+                    <li class="fragment">Solution: developers need to be smarter, IA needs to be better</li>
+                </ul>
+            </li>
+            <li class="fragment">Expansive sites with lots of custom routes harder to achieve
+                <ul>
+                    <li class="fragment">Solution: developers need to be smarter, IA needs to be better</li>
+                </ul>
+            </li>
+            <li class="fragment">Clients contact you less
+                <ul>
+                    <li class="fragment">Bonus: love your clients</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+    <section>
+        <h2>Benefits</h2>
+
+        <ul>
+            <li class="fragment">Easier to manage large catalogs (products, blogs, etc)</li>
+            <li class="fragment">Site structure cannot be messed with by clients (or account managers)</li>
+            <li class="fragment">More money to spend on cool stuff (because clients love you)</li>
+            <li class="fragment">Minimize risk</li>
+        </ul>
+    </section>
+
+<section>
+    <h1>THE END</h1>
+
+    <p>Thanks for listening. Here's a picture of a beautiful rabbit.</p>
+    <p><img src="rabbit.jpg" alt="What the?" style="border: 0; width:300px;" /></p>
+    <p class="fragment">Questions?</p>
+</section>
+
+</div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+    // Full list of configuration options available at:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'fade', // none/fade/slide/convex/concave/zoom
+
+        // Optional reveal.js plugins
+        dependencies: [
+            { src: 'lib/js/classList.js', condition: function () {
+                return !document.body.classList;
+            } },
+            { src: 'plugin/markdown/marked.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            } },
+            { src: 'plugin/markdown/markdown.js', condition: function () {
+                return !!document.querySelector('[data-markdown]');
+            } },
+            { src: 'plugin/highlight/highlight.js', async: true, condition: function () {
+                return !!document.querySelector('pre code');
+            }, callback: function () {
+                hljs.initHighlightingOnLoad();
+            } },
+            { src: 'plugin/zoom-js/zoom.js', async: true },
+            { src: 'plugin/notes/notes.js', async: true }
+        ]
+    });
+
+</script>
+
+</body>
+</html>

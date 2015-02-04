@@ -1,0 +1,29 @@
+.svg-lg {
+    fill: #C70038;
+    width: 3em;
+    height: 3em;
+    display: inline-block;
+}
+
+.stevie-holder {
+    position: relative;
+    top: 0;
+    left: 0;
+    min-height: 200px;
+
+
+}
+
+.stevie {
+    min-height: 150px;
+    position: absolute;
+    top: 0;
+    left: 40%;
+    right: 0;
+    display: block;
+    margin: 0 auto;
+}
+
+.stevie.fragment {
+    z-index: 100000;
+}
